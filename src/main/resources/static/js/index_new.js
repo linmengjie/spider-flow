@@ -106,5 +106,8 @@ $(function () {
         var $this = $(this);
         location.href = 'editor.html?id=' + $this.data('id');
     });
+    $('#create').click(function () {
+        location.href = 'editor.html';
+    });
 
 });

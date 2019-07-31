@@ -414,7 +414,7 @@ function bindToolbarClickAction(editor){
 			}
 		})
 	}).on('click',".btn-return",function(){
-		location.href="spiderList.html"
+		location.href="/"
 	}).on('click','.btn-save',function(){
 		Save();
 	})
