@@ -40,7 +40,7 @@ $(function () {
         let $parent = $this.parent();
         var id = $parent.data('id');
         layui.layer.prompt({
-            title : `为 <span style="color: #1E9FFF">${$parent.attr('title')}</span> 设置cron表达式`,
+            title : `为 <span style="color: #1E9FFF">${$parent.data('title')}</span> 设置cron表达式`,
             value : $parent.data('cron') || ''
         },function(value,index){
             $.ajax({
@@ -95,7 +95,7 @@ $(function () {
                     }
                 }
             });
-        }, 250);
+        }, 400);
     }).on('click', '.item', function (e) {
         var $this = $(this);
         location.href = 'editor.html?id=' + $this.data('id');

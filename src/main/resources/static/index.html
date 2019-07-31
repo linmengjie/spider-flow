@@ -28,9 +28,9 @@
 </body>
 <script id="items" type="text/x-jquery-tmpl">
     {{each(i,item) content}}
-        <div class="item clearfix" title="{{= item.name}}" data-id="{{= item.id}}" data-cron="{{= item.cron}}">
+        <div class="item clearfix" title="{{= item.name+'\r\n'}}创建时间：{{= item.createDate}}" data-title="{{= item.name}}" data-id="{{= item.id}}" data-cron="{{= item.cron}}">
             <span class="text">{{= item.name}}</span>
-            <i class="icon cron-edit{{if item.cron!=null&&item.cron!=''}}{{= ' has'}}{{/if}}" title="编辑 cron 表达式"></i>
+            <i class="icon cron-edit{{if !!item.cron}}{{= ' has'}}{{/if}}" title="编辑 cron 表达式"></i>
             <i class="icon status status-{{if item.enabled!='0'}}enable{{else}}disable{{/if}}" title="{{if item.enabled!='0'}}已{{else}}未{{/if}}启用"></i>
             <i class="icon delete" title="删除"></i>
         </div>
