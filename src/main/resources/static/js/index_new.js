@@ -85,8 +85,12 @@ $(function () {
                         $this.addClass('status-disable');
                     }
                 },
-                error : function(){
-                    layui.layer.msg('操作失败')
+                error : function(x){
+                    if (x.status === 500) {
+                        layui.layer.msg('操作失败<br>' + x.responseJSON.message);
+                    } else {
+                        layui.layer.msg('操作失败');
+                    }
                     $this.removeClass('status-enabling');
                     if (url == 'start') {
                         $this.addClass('status-disable');
