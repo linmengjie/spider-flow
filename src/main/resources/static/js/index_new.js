@@ -81,8 +81,10 @@ $(function () {
                     $this.removeClass('status-enabling');
                     if (url == 'start') {
                         $this.addClass('status-enable');
+                        $this.attr('title', '已启用');
                     } else {
                         $this.addClass('status-disable');
+                        $this.attr('title', '未启用');
                     }
                 },
                 error : function(x){
