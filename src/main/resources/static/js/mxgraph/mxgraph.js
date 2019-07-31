@@ -58882,7 +58882,7 @@ mxGraph.prototype.addCells = function(cells, parent, index, source, target)
 	{
 		this.cellsAdded(cells, parent, index, source, target, false, true);
 		this.fireEvent(new mxEventObject(mxEvent.ADD_CELLS, 'cells', cells,
-				'parent', parent, 'index', index, 'source', source, 'target', target));
+				'parent', parent, 'index_old.css', index, 'source', source, 'target', target));
 	}
 	finally
 	{
@@ -58989,7 +58989,7 @@ mxGraph.prototype.cellsAdded = function(cells, parent, index, source, target, ab
 			}
 			
 			this.fireEvent(new mxEventObject(mxEvent.CELLS_ADDED, 'cells', cells,
-				'parent', parent, 'index', index, 'source', source, 'target', target,
+				'parent', parent, 'index_old.css', index, 'source', source, 'target', target,
 				'absolute', absolute));
 		}
 		finally
@@ -72098,7 +72098,7 @@ mxSelectionCellsHandler.prototype.refresh = function()
  */
 mxSelectionCellsHandler.prototype.isHandlerActive = function(handler)
 {
-	return handler.index != null;
+	return handler.index_old != null;
 };
 
 /**
@@ -75760,7 +75760,7 @@ function mxVertexHandler(state)
 		// Handles escape keystrokes
 		this.escapeHandler = mxUtils.bind(this, function(sender, evt)
 		{
-			if (this.livePreview && this.index != null)
+			if (this.livePreview && this.index_old != null)
 			{
 				// Redraws the live preview
 				this.state.view.graph.cellRenderer.redraw(this.state, true);
@@ -77736,7 +77736,7 @@ function mxEdgeHandler(state)
 		// Handles escape keystrokes
 		this.escapeHandler = mxUtils.bind(this, function(sender, evt)
 		{
-			var dirty = this.index != null;
+			var dirty = this.index_old != null;
 			this.reset();
 			
 			if (dirty)
@@ -80440,7 +80440,7 @@ mxEdgeSegmentHandler.prototype.getPreviewPoints = function(point)
 		{
 			var pt = this.convertPoint(pts[i].clone(), false);
 			
-			if (i == this.index)
+			if (i == this.index_old)
 			{
 				if (Math.round(last.x - pt.x) == 0)
 		 		{
@@ -88503,7 +88503,7 @@ mxCodecRegistry.register(function()
 
             obj.child.parent = obj.previous;
             obj.previous = obj.parent;
-            obj.previousIndex = obj.index;
+            obj.previousIndex = obj.index_old;
         }
 
 		return obj;

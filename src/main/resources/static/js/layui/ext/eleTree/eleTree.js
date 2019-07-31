@@ -617,14 +617,14 @@ layui.define(["jquery","laytpl"], function (exports) {
         // 通过dom节点找对应数据
         reInitData: function(node) {
             var options=this.config;
-            var i=node.index();
+            var i=node.index_old();
             var floor=Number(node.attr("eletree-floor"));
             var arr=[];     // 节点对应的index
             while (floor>=0) {
                 arr.push(i);
                 floor=floor-1;
                 node=node.parents("[eletree-floor='"+floor+"']");
-                i=node.index();
+                i=node.index_old();
             }
             arr=arr.reverse();
             var oData=this.config.data;

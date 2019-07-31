@@ -1,37 +1,39 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<title>SpiderFlow</title>
-		<link rel="stylesheet" href="js/layui/css/layui.css" />
-		<link rel="stylesheet" href="css/layui-blue.css" />
-		<link rel="stylesheet" href="css/index.css" />
-		<script type="text/javascript" src="js/layui/layui.all.js" ></script>
-		<script type="text/javascript" src="js/index.js" ></script>
-	</head>
-	<body class="layui-layout layui-layout-admin">
-		<div class="layui-header">
-			<div class="layui-logo">SpiderFlow v1.0平台</div>
-			<ul class="layui-nav layui-layout-left"></ul>
-		</div>
-		<div class="layui-side">
-			<div class="layui-side-scroll menu-list">
-				<ul class="layui-nav layui-nav-tree">
-					<li class="layui-nav-item layui-nav-itemed layui-this"><a title="爬虫列表">爬虫列表</a></li>
-				</ul>
-			</div>
-		</div>
-		<div class="layui-body">
-			<div class="layui-tab" lay-filter="admin-tab" lay-allowClose="true">
-		    	<ul class="layui-tab-title admin-unselect" unselectable="on" lay-allowClose="false">
-			    	<li class="layui-this layui-tab-hidden-close" lay-id="welcome">爬虫列表</li>
-		    	</ul>
-		    	<div class="layui-tab-content">
-		    		<div class="layui-tab-item layui-show">
-		    			<iframe src="spiderList.html" width="100%" height="100%" scrolling="yes" frameborder="0"></iframe>
-		    		</div>
-		    	</div>
-		    </div>
-		</div>
-	</body>
+<head>
+    <meta charset="UTF-8">
+    <title>SpiderFlow</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/index.css">
+    <script type="text/javascript" src="js/layui/layui.all.js"></script>
+    <script type="text/javascript" src="js/index_new.js"></script>
+</head>
+<body>
+    <div class="root">
+        <header>
+        </header>
+        <article>
+            <aside>
+                <ul class="menus">
+                    <li><a href="javascript:;">新建</a></li>
+                    <li class="active"><a href="javascript:;">我的爬虫</a></li>
+                </ul>
+            </aside>
+            <div class="content">
+                <div class="main">
+                </div>
+            </div>
+        </article>
+    </div>
+</body>
+<script id="items" type="text/x-jquery-tmpl">
+    {{each(i,item) content}}
+        <div class="item clearfix" title="{{= item.name}}" data-id="{{= item.id}}" data-cron="{{= item.cron}}">
+            <span class="text">{{= item.name}}</span>
+            <i class="icon cron-edit{{if item.cron!=null&&item.cron!=''}}{{= ' has'}}{{/if}}" title="编辑 cron 表达式"></i>
+            <i class="icon status status-{{if item.enabled!='0'}}enable{{else}}disable{{/if}}" title="{{if item.enabled!='0'}}已{{else}}未{{/if}}启用"></i>
+            <i class="icon delete" title="删除"></i>
+        </div>
+    {{/each}}
+</script>
 </html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>SpiderFlow</title>
+		<link rel="stylesheet" href="css/common.css">
+		<script type="text/javascript" src="js/konva/konva.min.js"></script>
+		<script type="text/javascript" src="js/konva/tools.js"></script>
+	</head>
+	<body>
+		<div id="canvas" style="background-color:#efefef;">
+
+		</div>
+	</body>
+	<script>
+        var stage = new Konva.Stage({
+            container: 'canvas',// id of container <div>
+            width: document.documentElement.clientWidth,
+            height: document.documentElement.clientHeight
+        });
+        var layer = new Konva.Layer();
+		stage.add(layer);
+
+		//绘制导航条
+		var rect = new Konva.Rect({x: 0,y: 0,width: stage.width(),height: 62,fill: 'white'});
+		layer.add(rect);
+
+		//绘制LOGO
+		loadImage('images/logo.svg').then(img => {
+			var darthVaderImg = new Konva.Image({
+				image: img,
+				x: 20,
+				y: 2,
+				width: 240,
+				height: 60,
+				draggable: false
+			});
+			layer.add(darthVaderImg);
+			layer.draw();
+		});
+
+		//绘制阴影
+		layer.add(new Konva.Line({stroke:'#e5e5e5',strokeWidth:1,lineCap:'square',y:63,points:[0, 0, stage.width(), 0]}));
+		layer.add(new Konva.Line({stroke:'#ebebeb',strokeWidth:1,lineCap:'square',y:64,points:[0, 0, stage.width(), 0]}));
+		layer.draw();
+
+		buildMenu(layer, []);
+
+		var menu1 = new Konva.Rect({
+			x: 60,
+			y: 80,
+			width: 100,
+			height: 30,
+			// fill: 'rgba(0,0,0,0)',
+			fill: '#4287f6',
+			strokeWidth: 0,
+		});
+		menu1.cornerRadius(3);
+		layer.add(menu1);
+
+		var menu_add_text = new Konva.Text({ x: menu1.x()+menu1.width()/2,y: menu1.y()+menu1.height()/2,text: '新建',fontSize: 14,fontFamily: '微软雅黑',fill: 'white'});
+		menu1.on('mouseenter', function() {this.fill('#5a97fa');layer.draw();stage.container().style.cursor = 'pointer';});
+		menu1.on('mouseleave', function() {this.fill('#4287f6');layer.draw();stage.container().style.cursor = 'default';});
+		menu_add_text.on('mouseenter', function() {menu1.fill('#5a97fa');layer.draw();stage.container().style.cursor = 'pointer';});
+		menu_add_text.on('mouseleave', function() {menu1.fill('#4287f6');layer.draw();stage.container().style.cursor = 'default';});
+		menu_add_text.offsetX(menu_add_text.width() / 2);
+		menu_add_text.offsetY(menu_add_text.height() / 2);
+		layer.add(menu_add_text);
+		layer.draw();
+
+		// loadImage('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAqCAIAAAD9HKYrAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQ1IDc5LjE2MzQ5OSwgMjAxOC8wOC8xMy0xNjo0MDoyMiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTkgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkE0QTZDREZEQjM1MTExRTlCQTE0RDk2RjQ3REUwNUI4IiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkE0QTZDREZFQjM1MTExRTlCQTE0RDk2RjQ3REUwNUI4Ij4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6QTRBNkNERkJCMzUxMTFFOUJBMTREOTZGNDdERTA1QjgiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6QTRBNkNERkNCMzUxMTFFOUJBMTREOTZGNDdERTA1QjgiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz6KlZp/AAAAUklEQVR42iyNwRUAMARDwxr2n8DRYj1JVXPw8CWBzPSIQHf7OccBbHE7HYQYxaZIaR4z7dLav1MZ9uZl39ujM93B8aI3w4b36sdn/F3/quoKMACuFi+xWJhr/AAAAABJRU5ErkJggg==')
+		// 		.then(img => {
+		// 			var darthVaderImg = new Konva.Image({
+		// 				image: img,
+		// 				x: 0,
+		// 				y: 0,
+		// 				width: stage.width(),
+		// 				height: 42,
+		// 				draggable: false
+		// 			});
+		// 			layer.add(darthVaderImg);
+		// 			layer.draw();
+		// 			stage.add(layer);
+		// 		});
+
+
+	</script>
+</html>

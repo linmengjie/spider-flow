@@ -1048,7 +1048,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form'], function(exports){
         trs.each(function (o) {
             $(this).attr("data-index",i);
             $(this).find(".laytable-cell-numbers p").text(i+1);
-            $(this).data('index',i);
+            $(this).data('index_old.css',i);
             i++;
         });
     }
@@ -1696,7 +1696,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form'], function(exports){
             return attr.join(' ');
         }() +'>'
             ,'<div class="layui-table-cell laytable-cell-'+ function(){ //返回对应的CSS类标识
-                var str = (options.index + '-' + field);
+                var str = (options.index_old + '-' + field);
                 return cols.type === 'normal' ? str
                     : (str + ' laytable-cell-' + cols.type);
             }() +'">'+treeImgHtml+'<p style="width: auto;height: 100%;">'+ function(){
@@ -1816,7 +1816,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form'], function(exports){
                 that.haveInit = true;
                 layer.close(that.tipsIndex);
             };
-        that.key = options.id || options.index;
+        that.key = options.id || options.index_old;
         // table.cache[that.key] = data; //记录数据
         table.setDataList(that.key,data);
         //显示隐藏分页栏
@@ -1846,7 +1846,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form'], function(exports){
         //同步分页状态
         if(options.isPage){
             options.page = $.extend({
-                elem: 'layui-table-page' + options.index
+                elem: 'layui-table-page' + options.index_old
                 ,count: count
                 ,limit: options.limit
                 ,limits: options.limits || [10,15,20,30,40,50,60,70,80,90]
@@ -1916,7 +1916,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form'], function(exports){
     Class.prototype.getColElem = function(parent, field){
         var that = this
             ,options = that.config;
-        return parent.eq(0).find('.laytable-cell-'+ (options.index + '-' + field) + ':eq(0)');
+        return parent.eq(0).find('.laytable-cell-'+ (options.index_old + '-' + field) + ':eq(0)');
     };
     //渲染表单
     Class.prototype.renderForm = function(type){
@@ -1975,7 +1975,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form'], function(exports){
                     return;
                 }
             }
-            var elemSort = that.layHeader.find('th .laytable-cell-'+ options.index +'-'+ field).find(ELEM_SORT);
+            var elemSort = that.layHeader.find('th .laytable-cell-'+ options.index_old +'-'+ field).find(ELEM_SORT);
             //that.layHeader.find('th').find(ELEM_SORT).removeAttr('lay-sort'); //清除其它标题排序状态
             elemSort.attr('lay-sort', type || null);
             that.layFixed.find('th')
@@ -2381,7 +2381,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form'], function(exports){
         })
         th.find(ELEM_SORT+' .layui-edge ').unbind('click').on('click', function(e){//点击小三角形
             var othis = $(this)
-                ,index = othis.index()
+                ,index = othis.index_old()
                 ,field = othis.parents('th').eq(0).data('field')
             layui.stope(e);
             if(index === 0){
@@ -2427,12 +2427,12 @@ layui.define(['laytpl', 'laypage', 'layer', 'form'], function(exports){
         //行事件
         that.layBody.on('mouseenter','tr',function(){
             var othis = $(this)
-                ,index = othis.index();
+                ,index = othis.index_old();
             that.layBody.find('tr:eq('+ index +')').addClass(ELEM_HOVER)
         })
         that.layBody.on('mouseleave','tr', function(){
             var othis = $(this)
-                ,index = othis.index();
+                ,index = othis.index_old();
             that.layBody.find('tr:eq('+ index +')').removeClass(ELEM_HOVER)
         });
         //单元格事件
@@ -2440,7 +2440,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form'], function(exports){
             var othis = $(this).parent().parent()
                 ,field = othis.data('field')
                 ,editType = othis.data('edit')
-                ,index = othis.parents('tr').eq(0).data('index')
+                ,index = othis.parents('tr').eq(0).data('index_old.css')
                 ,data = table.getDataList(that.key)[index]
                 ,elemCell = othis.children(ELEM_CELL);
             var  options = that.config;
@@ -2515,7 +2515,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form'], function(exports){
             var othis = $(this)
                 ,value = this.value
                 ,field = othis.parent().data('field')
-                ,index = othis.parents('tr').eq(0).data('index')
+                ,index = othis.parents('tr').eq(0).data('index_old.css')
                 ,data = table.getDataList(that.key)[index];
             data[field] = value; //更新缓存中的值
             layui.event.call(this, MOD_NAME, 'edit('+ filter +')', {
@@ -2528,7 +2528,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form'], function(exports){
             var templet
                 ,othis = $(this)
                 ,field = othis.parent().data('field')
-                ,index = othis.parents('tr').eq(0).data('index')
+                ,index = othis.parents('tr').eq(0).data('index_old.css')
                 ,editType = othis.parent().data('edit')
                 ,data = table.getDataList(that.key)[index];
             var  options = that.config;
@@ -2558,7 +2558,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form'], function(exports){
         //树形节点点击事件（隐藏展开下级节点）
         that.elem.on('click','i.layui-tree-head', function(){
             var othis = $(this)
-                ,index = othis.parents('tr').eq(0).data('index')
+                ,index = othis.parents('tr').eq(0).data('index_old.css')
                 ,options=that.config
                 ,datas=table.getDataList(that.key);//数据
             var o=datas[index];
@@ -2569,7 +2569,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form'], function(exports){
         that.elem.on('click','input[name="'+TABLE_CHECKBOX_ID+'"]+', function(){
             var checkbox = $(this).prev()
                 ,childs = that.layBody.find('input[name="'+TABLE_CHECKBOX_ID+'"]')
-                ,index = checkbox.parents('tr').eq(0).data('index')
+                ,index = checkbox.parents('tr').eq(0).data('index_old.css')
                 ,checked = checkbox[0].checked
                 ,obj=table.getDataList(that.config.id)[index]
                 ,isAll = checkbox.attr('lay-filter') === 'layTableAllChoose';
@@ -2627,7 +2627,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form'], function(exports){
         //单选框选择
         that.elem.on('click','input[name="'+TABLE_RADIO_ID+'"]+', function(){
             var checkbox = $(this).prev()
-                ,index = checkbox.parents('tr').eq(0).data('index')
+                ,index = checkbox.parents('tr').eq(0).data('index_old.css')
                 ,obj=table.getDataList(that.config.id)[index];
             typeof options.onRadio === 'function' && options.onRadio(obj);
         });
@@ -2635,7 +2635,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form'], function(exports){
         //工具条操作事件
         that.layBody.on('click', '*[lay-event]',function(){
             var othis = $(this)
-                ,index = othis.parents('tr').eq(0).data('index')
+                ,index = othis.parents('tr').eq(0).data('index_old.css')
                 ,tr = that.layBody.find('tr[data-index="'+ index +'"]')
                 ,ELEM_CLICK = 'layui-table-click'
                 ,list = table.getDataList(that.key)
