@@ -107,7 +107,13 @@ $(function () {
         location.href = 'editor.html?id=' + $this.data('id');
     });
     $('#create').click(function () {
-        location.href = 'editor.html';
+        setTimeout(function () {
+            location.href = 'editor.html';
+        }, 200);
     });
-
+    $('ul.menus>li').click(function () {
+        let $this = $(this);
+        $this.siblings().removeClass('active');
+        $this.addClass('active');
+    });
 });
