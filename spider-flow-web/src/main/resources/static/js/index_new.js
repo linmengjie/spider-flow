@@ -39,26 +39,28 @@ $(function () {
         var $this = $(this);
         let $parent = $this.parent();
         var id = $parent.data('id');
-        layui.layer.prompt({
-            title : `为 <span style="color: #1E9FFF">${$parent.data('title')}</span> 设置cron表达式`,
-            value : $parent.data('cron') || ''
-        },function(value,index){
-            $.ajax({
-                url : 'spider/cron',
-                data : {
-                    id : id,
-                    cron : value
-                },
-                success : function(){
-                    layui.layer.msg('修改成功',{time : 500},function(){
-                    })
-                },
-                error : function(){
-                    layui.layer.msg('修改失败')
-                }
-            });
-            layui.layer.close(index);
-        });
+        var cron = $parent.data('cron');
+        location.href = 'editCron.html?id=' + id + '&cron=' + encodeURIComponent(cron);
+        // layui.layer.prompt({
+        //     title : `为 <span style="color: #1E9FFF">${$parent.data('title')}</span> 设置cron表达式`,
+        //     value : $parent.data('cron') || ''
+        // },function(value,index){
+        //     $.ajax({
+        //         url : 'spider/cron',
+        //         data : {
+        //             id : id,
+        //             cron : value
+        //         },
+        //         success : function(){
+        //             layui.layer.msg('修改成功',{time : 500},function(){
+        //             })
+        //         },
+        //         error : function(){
+        //             layui.layer.msg('修改失败')
+        //         }
+        //     });
+        //     layui.layer.close(index);
+        // });
     }).on('click', 'i.status-enable,i.status-disable', function (e) {
         e.stopPropagation();
         var $this = $(this);
