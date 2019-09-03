@@ -574,7 +574,7 @@
                 var $parent = parent;
                 parent.layer.msg('修改成功',{time : 500},function(e){
                     // $parent.$table.reload();
-                    history.back()
+                    location.href = '/';
                 })
             },
             error : function(){
