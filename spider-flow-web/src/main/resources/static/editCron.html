@@ -573,7 +573,8 @@
             success : function(){
                 var $parent = parent;
                 parent.layer.msg('修改成功',{time : 500},function(e){
-                    $parent.$table.reload();
+                    // $parent.$table.reload();
+                    history.back()
                 })
             },
             error : function(){

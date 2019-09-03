@@ -40,7 +40,7 @@ $(function () {
         let $parent = $this.parent();
         var id = $parent.data('id');
         var cron = $parent.data('cron');
-        location.href = 'editCron.html?id=' + id + '&cron=' + encodeURIComponent(cron);
+        location.href = 'editCron.html?id=' + id + '&cron=' + cron;
         // layui.layer.prompt({
         //     title : `为 <span style="color: #1E9FFF">${$parent.data('title')}</span> 设置cron表达式`,
         //     value : $parent.data('cron') || ''
