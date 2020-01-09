@@ -11,10 +11,10 @@ import org.spiderflow.Grammerable;
 import org.spiderflow.annotation.Comment;
 import org.spiderflow.core.model.SpiderFlow;
 import org.spiderflow.core.service.SpiderFlowService;
+import org.spiderflow.core.utils.ExecutorsUtil;
 import org.spiderflow.executor.FunctionExecutor;
 import org.spiderflow.executor.FunctionExtension;
 import org.spiderflow.executor.PluginConfig;
-import org.spiderflow.executor.ShapeExecutor;
 import org.spiderflow.io.Line;
 import org.spiderflow.io.RandomAccessFileReader;
 import org.spiderflow.model.Grammer;
@@ -46,9 +46,6 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/spider")
 public class SpiderFlowController {
-	
-	@Autowired
-	private List<ShapeExecutor> executors;
 	
 	@Autowired
 	private List<FunctionExecutor> functionExecutors;
@@ -173,7 +170,7 @@ public class SpiderFlowController {
 	
 	@RequestMapping("/shapes")
 	public List<Shape> shapes(){
-		return executors.stream().filter(e-> e.shape() !=null).map(executor -> executor.shape()).collect(Collectors.toList());
+		return ExecutorsUtil.shapes();
 	}
 	
 	@RequestMapping("/pluginConfigs")

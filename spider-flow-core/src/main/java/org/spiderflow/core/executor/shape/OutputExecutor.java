@@ -11,6 +11,7 @@ import org.spiderflow.ExpressionEngine;
 import org.spiderflow.context.RunnableTreeNode;
 import org.spiderflow.context.SpiderContext;
 import org.spiderflow.core.serializer.FastJsonSerializer;
+import org.spiderflow.core.utils.ExpressionUtils;
 import org.spiderflow.executor.ShapeExecutor;
 import org.spiderflow.io.SpiderResponse;
 import org.spiderflow.model.SpiderNode;
@@ -33,9 +34,6 @@ public class OutputExecutor implements ShapeExecutor{
 	public static final String OUTPUT_VALUE = "output-value";
 
 	private static Logger logger = LoggerFactory.getLogger(OutputExecutor.class);
-	
-	@Autowired
-	private ExpressionEngine engine;
 
 	@Override
 	public void execute(SpiderNode node, SpiderContext context, Map<String,Object> variables) {
@@ -52,7 +50,7 @@ public class OutputExecutor implements ShapeExecutor{
 			String outputValue = item.get(OUTPUT_VALUE);
 			String outputName = item.get(OUTPUT_NAME);
 			try {
-				value = engine.execute(outputValue, variables);
+				value = ExpressionUtils.execute(outputValue, variables);
 				logger.debug("输出{}={}", outputName,value);
 			} catch (Exception e) {
 				logger.error("输出{}出错，异常信息：{}", outputName,e);

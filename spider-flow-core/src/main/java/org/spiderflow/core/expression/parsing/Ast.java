@@ -243,6 +243,11 @@ public abstract class Ast {
 		}
 
 		private Object evaluateAddition (Object left, Object right) {
+			if (left == null) {
+				return evaluateValue(right);
+			} else if (right == null) {
+				return evaluateValue(left);
+			}
 			if (left instanceof String || right instanceof String) {
 				return left.toString() + right.toString();
 			}
@@ -267,6 +272,28 @@ public abstract class Ast {
 
 			ExpressionError.error("Operands for addition operator must be numbers or strings, got " + left + ", " + right + ".", getSpan());
 			return null; // never reached
+		}
+
+		private Object evaluateValue(Object evaluate){
+			if (evaluate == null) {
+				return null;
+			} else if (evaluate instanceof String) {
+				return evaluate.toString();
+			} else if (evaluate instanceof Double) {
+				return ((Number)evaluate).doubleValue();
+			} else if (evaluate instanceof Float) {
+				return ((Number)evaluate).floatValue();
+			} else if (evaluate instanceof Long) {
+				return ((Number)evaluate).longValue();
+			} else if (evaluate instanceof Integer) {
+				return ((Number)evaluate).intValue();
+			} else if (evaluate instanceof Short) {
+				return ((Number)evaluate).shortValue();
+			} else if (evaluate instanceof Byte){
+				return ((Number)evaluate).byteValue();
+			}
+			ExpressionError.error("Operands for addition operator must be numbers or strings, got " + evaluate + ".", getSpan());
+			return null;
 		}
 
 		private Object evaluateSubtraction (Object left, Object right) {
