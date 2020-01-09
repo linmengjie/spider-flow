@@ -91,9 +91,15 @@ public class FileFunctionExecutor implements FunctionExecutor{
 		write(path,bytes,false);
 	}
 
-	@Comment("下载Url资源")
-	@Example("${file.write('e:/downloadPath',urls)}")
-	public static void write(String path, List<String> urls) throws IOException{
+	@Comment("下载单个Url资源")
+	@Example("${file.download('e:/downloadPath',url)}")
+	public static void download(String path, String url) throws IOException{
+		FileUtils.downloadFile(path, url, true);
+	}
+
+	@Comment("下载多个Url资源")
+	@Example("${file.download('e:/downloadPath',urls)}")
+	public static void download(String path, List<String> urls) throws IOException{
 		if(!CollectionUtils.isEmpty(urls)) {
 			for (String url : urls) {
 				FileUtils.downloadFile(path, url, true);
